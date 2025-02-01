@@ -86,6 +86,25 @@ def handle_submit(input_prompt, uploaded_file):
 
 # Initialize the app
 
+# Initialize query count    
+if "query_count" not in st.session_state:
+    st.session_state['query_count'] = 0
+
+# Manage query count
+def manage_query_count():
+    """
+    Manage query count and reset after a minute if limit is exceeded.
+    """
+    if st.session_state['query_count'] > 5:
+        st.warning("You have reached the limit of 5 queries. Please try again later.")
+        # st.session_state['reset_time'] = time.time()
+        return
+        # if 'reset_time' in st.session_state and time.time() - st.session_state['reset_time'] > 60:
+        #     st.session_state['query_count'] = 0
+        #     del st.session_state['reset_time']
+    else:
+        st.session_state['query_count'] += 1
+
 def main():
     """
     Main function to set up the Streamlit app interface for interacting with an image of a meal.
@@ -112,6 +131,7 @@ def main():
     if st.button("Get Calories", key="calorie_button", help="Click to get nutritional details"):
         if uploaded_file is not None:
             handle_submit(input_prompt, uploaded_file)
+            manage_query_count()
         else:
             st.warning("Please upload an image of a meal.")
     
