@@ -10,7 +10,6 @@ import time
 load_dotenv()
 
 # Configure the API key
-
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
@@ -61,23 +60,28 @@ def display_image(uploaded_file):
 
 # Handle submission of prompt and image
 input_prompt = """
-As a registered dietitian, analyze the provided image of a meal.  Provide a nutritional breakdown including:
+As a registered dietitian, analyze the provided image of a meal. Provide a nutritional breakdown in the following *exact* format:
 
-* Total Calories: [Value], 
-* Total Protein (grams): [Value]
+Overall Meal Analysis
+- Total Calories: [Value] kcal
+- Total Protein: [Value] g
 
-Individual Items:
-Item 1 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
-Item 2 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
-Item 3 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
+Meal Macronutrient Breakdown:
+- Carbohydrates: [Value]%
+- Protein: [Value]%
+- Fat: [Value]%
+
+Individual Item Breakdown:
+
+| Item | Calories (kcal) | Protein (g) | Carbohydrates (%) | Fat (%) |
+|---|---|---|---|---|
+| Item 1 | [Value] | [Value] | [Value] | [Value] |
+| Item 2 | [Value] | [Value] | [Value] | [Value] |
+| Item 3 | [Value] | [Value] | [Value] | [Value] |
 ... (Continue for all items)
 
-Assess the overall healthfulness of the meal. Provide a macronutrient breakdown for the *entire meal* as percentages:
-Carbohydrates (%): [Value]
-Protein (%): [Value]
-Fat (%): [Value]
 
-Mention any other relevant nutritional considerations.  If any items are high in calories or have other nutritional concerns, suggest healthier alternatives.  Be concise and use numerical values for macronutrients.
+Mention any other relevant nutritional considerations.  If any items are high in calories or have other nutritional concerns, suggest healthier alternatives.  Be concise and use numerical values for macronutrients.  Do *not* combine any of the above output lines, except within the table.
 """
 def handle_submit(input_prompt, uploaded_file):
     """
