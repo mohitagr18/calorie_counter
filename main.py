@@ -10,11 +10,15 @@ import time
 load_dotenv()
 
 # Configure the API key
+
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
 # Load model and get response
-model = genai.GenerativeModel("gemini-1.5-flash-002")
+# model = genai.GenerativeModel("gemini-1.5-flash-002")
+model = genai.GenerativeModel("gemini-2.0-flash-001")
+print(model)
+
 def get_response(input_prompt, image):
     """
     Generates a response based on the given input prompt and image.
@@ -57,21 +61,23 @@ def display_image(uploaded_file):
 
 # Handle submission of prompt and image
 input_prompt = """
-You are an expert in nutrition and dietetics. You are given an image of a meal.
-YOUR TASK is to provide the total calories and proteins in the meal along with 
-calorie and protein for each item in the below format:
-Total Calories: , Total Proteins: \n
-Individual Items:\n
-Item 1 - Calories:, Proteins: ,\n
-Item 2 - Calories:, Proteins: ,\n
-----
-----
-Make sure that each item is in its own line when showing calories and proteins.
-Once the counts are provided, you should also mention if the food is healthy or not. Finally you can also mention
-percentage split of carbs, sugar and fats etc. and other important things required in the diet.
-If you think certain food items have high calories, you can also suggest alternatives at the end.
-Keep the response brief and to the point. Don't use adjectives, use numbers for macronutrients where possible
+As a registered dietitian, analyze the provided image of a meal.  Provide a nutritional breakdown including:
 
+- Total Calories: [Value], 
+- Total Protein (grams): [Value]
+
+Individual Items:
+Item 1 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
+Item 2 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
+Item 3 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
+... (Continue for all items)
+
+Assess the overall healthfulness of the meal. Provide a macronutrient breakdown for the *entire meal* as percentages:
+Carbohydrates (%): [Value]
+Protein (%): [Value]
+Fat (%): [Value]
+
+Mention any other relevant nutritional considerations.  If any items are high in calories or have other nutritional concerns, suggest healthier alternatives.  Be concise and use numerical values for macronutrients.
 """
 def handle_submit(input_prompt, uploaded_file):
     """
