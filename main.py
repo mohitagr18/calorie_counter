@@ -63,8 +63,8 @@ def display_image(uploaded_file):
 input_prompt = """
 As a registered dietitian, analyze the provided image of a meal.  Provide a nutritional breakdown including:
 
-- Total Calories: [Value], 
-- Total Protein (grams): [Value]
+* Total Calories: [Value], 
+* Total Protein (grams): [Value]
 
 Individual Items:
 Item 1 - Calories: [Value], Protein (grams): [Value], Carbohydrates (%): [Value], Fat (%): [Value]
