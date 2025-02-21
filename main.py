@@ -127,7 +127,7 @@ def main():
     st.title("Gemini Image Nutrition Analyzer")
     st.write("")
     st.markdown("###### Easily analyze your food's nutrition with AI. "
-                "Google Gemini provides the detailed breakdown you need, just upload an image.")
+                "Google Gemini (Gemini 2.0 Flash) provides the detailed breakdown you need, just upload an image.")
     st.write("")
     
     # Display image upload widget
